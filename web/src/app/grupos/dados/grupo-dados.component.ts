@@ -127,7 +127,10 @@ export class GrupoDadosComponent implements OnInit {
     this.participanteService
       .dica_save(this.dica)
       .subscribe(
-          res => this.dica = res as Dica,
+          res => {
+            this.dica = res as Dica;
+            alert('Dica salva com sucesso!')
+          },
           err => console.log(err)
       );
   }
@@ -141,9 +144,9 @@ export class GrupoDadosComponent implements OnInit {
       );
   }
 
-  private message (participante: Participante, anonimo: boolean) {
-    anonimo = isDefined(anonimo) ? anonimo : false;
-    this.router.navigate(['/mensagens/' + participante.CD_Usuario + '/' + anonimo]);
+  private message (participante: Participante, anonimo?: number) {
+    anonimo = isDefined(anonimo) ? anonimo : 0;
+    this.router.navigate(['/mensagens/' + anonimo + '/' + participante.CD_Usuario]);
   }
 
   /* funções relativas ao sorteio */

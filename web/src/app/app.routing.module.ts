@@ -31,7 +31,7 @@ const appRoutes: Routes = [
     /* rotas referentes as mensagens de amigos */
     { path: 'mensagens', component: MensagemListaComponent , canActivate: [ AuthGuard ] },
     { path: 'mensagens/:user', component: MensagemDadosComponent , canActivate: [ AuthGuard ] },
-    { path: 'mensagens/:user/:anonimo', component: MensagemDadosComponent , canActivate: [ AuthGuard ] },
+    { path: 'mensagens/:anonimo/:user', component: MensagemDadosComponent , canActivate: [ AuthGuard ] },
 
     /* tratamento de erros de rota */
     { path: '**', component: NotfoundComponent }

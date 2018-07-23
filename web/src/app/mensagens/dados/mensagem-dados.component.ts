@@ -41,7 +41,7 @@ export class MensagemDadosComponent implements OnInit {
     });
 
     this.mensagem.CD_UsuarioDestino = (!isDefined(this.activatedRoute.snapshot.params.user)) ? '' : this.activatedRoute.snapshot.params.user;
-    this.mensagem.fl_Anonimo = ((!isDefined(this.activatedRoute.snapshot.params.anonimo)) ? 0 : this.activatedRoute.snapshot.params.anonimo) as boolean;
+    this.mensagem.fl_Anonimo = ((!isDefined(this.activatedRoute.snapshot.params.anonimo)) ? 0 : this.activatedRoute.snapshot.params.anonimo) as number;
     
     /* listagem de mensagens da conversa */
     this.mensagemService
@@ -56,7 +56,7 @@ export class MensagemDadosComponent implements OnInit {
               .subscribe (
                 res => {
                   var usuario_ret = res as Usuario;
-                  if (!!this.mensagens[this.mensagens.length - 1].fl_Anonimo && this.mensagens[this.mensagens.length - 1].ID_Usuario == usuario_ret.ID_Usuario) {
+                  if (this.mensagem.fl_Anonimo == 1 && this.mensagens.length > 0 && this.mensagens[this.mensagens.length - 1].ID_Usuario == usuario_ret.ID_Usuario) {
                     this.usuario.CD_Usuario = usuario_ret.CD_Usuario
                   } else {
                     this.usuario = usuario_ret;

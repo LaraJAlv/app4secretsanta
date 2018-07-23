@@ -25,7 +25,7 @@ export class MensagemService {
             .get(environment.api_url + 'mensagens/' + CD_Usuario);
     }
 
-    get (CD_UsuarioDestino: string, fl_Anonimo: boolean) {
+    get (CD_UsuarioDestino: string, fl_Anonimo: number) {
         var CD_Usuario : string = this.authService.getUserCode();
         return this.http
             .post(environment.api_url + 'mensagens/seleciona', { 'CD_Usuario' : CD_Usuario , 'CD_UsuarioDestino' : CD_UsuarioDestino , 'fl_Anonimo' : fl_Anonimo });

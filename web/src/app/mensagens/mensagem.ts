@@ -8,7 +8,7 @@ export interface Mensagem {
     nm_Usuario?: string;
     tx_Mensagem: string;
     dt_Mensagem?: Date;
-    fl_Anonimo?: boolean;
+    fl_Anonimo?: number;
     fl_Lido?: boolean;
     nr_Lidos?: number;
 }

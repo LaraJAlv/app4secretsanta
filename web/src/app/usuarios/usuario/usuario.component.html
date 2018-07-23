@@ -15,16 +15,22 @@
           <div class="divider"></div>
 
           <p>
-            <i class="material-icons left">group</i>
-            Você pertence a {{ usuario.nr_Grupos }} grupos de amigos
+            <a [routerLink]="['/grupos']">
+              <i class="material-icons left">group</i>
+              Você pertence a {{ usuario.nr_Grupos }} grupos de amigos
+            </a>
           </p>
           <p>
-            <i class="material-icons left">person</i>
-            Destes grupos, em {{ usuario.nr_GruposProprietario }} você é o criador
+            <a [routerLink]="['/grupos']">
+              <i class="material-icons left">person</i>
+              Destes grupos, em {{ usuario.nr_GruposProprietario }} você é o criador
+            </a>
           </p>
           <p>
-            <i class="material-icons left">message</i>
-            Você possui {{ usuario.nr_Mensagens }} mensagens não lidas
+            <a [routerLink]="['/mensagens']">
+              <i class="material-icons left">message</i>
+              Você possui {{ usuario.nr_Mensagens }} mensagens não lidas
+            </a>
           </p>
       </div>
 

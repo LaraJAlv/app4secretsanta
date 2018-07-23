@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from "angular-6-social-login";
 
 import { CoreModule } from '../core/core.module';
@@ -30,6 +31,7 @@ export function getAuthServiceConfigs() {
     HttpClientModule,
     SocialLoginModule,
     CommonModule,
+    RouterModule,
     CoreModule
   ],
   providers: [

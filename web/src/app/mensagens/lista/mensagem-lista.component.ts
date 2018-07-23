@@ -41,7 +41,7 @@ export class MensagemListaComponent implements OnInit {
   }
 
   private open (mensagem: Mensagem) {
-    this.router.navigate(['/mensagens/' + mensagem.CD_Usuario + '/' + mensagem.fl_Anonimo])
+    this.router.navigate(['/mensagens/' + mensagem.fl_Anonimo + '/' + mensagem.CD_Usuario])
   }
 
 }

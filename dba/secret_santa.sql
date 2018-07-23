@@ -26,7 +26,11 @@ CREATE TABLE `tab_Grupos` (
   `dt_Cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dt_Sorteio` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`ID_Grupo`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `tab_Grupos` */
+
+insert  into `tab_Grupos`(`ID_Grupo`,`nm_Grupo`,`tx_Grupo`,`dt_Cadastro`,`dt_Sorteio`) values ('2','grupo 2',NULL,'2018-07-17 17:12:56',NULL),('3','grupo 3',NULL,'2018-07-17 17:12:59',NULL),('9','Amigo oculto da empresa','Este amigo oculto será sorteado no dia 30/07/2018 e a revelação será no dia 10/08/2018 na reunião de comemoração da entrada dos novos integrante da equipe (me inclusive rsrs)','2018-07-20 16:22:52',NULL),('10','Festa em comemoração da minha contratação','Esta festa vai bombar para caramba! Vai entrando no grupo ai mas os presentes quero todos pra mim!!','2018-07-20 17:21:50','2018-07-23 12:10:33'),('22','Grupo teste mussum','Mussum Ipsum, cacilds vidis litro abertis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. In elementis mé pra quem é amistosis quis leo. Sapien in monti palavris qui num significa nadis i pareci latim. ','2018-07-21 00:08:39',NULL),('23','Nois','Nois','2018-07-22 10:54:43',NULL),('24','Amigo invisível','Amigo invisível da turma de 2008','2018-07-23 11:00:45','2018-07-23 11:26:20'),('25','Lara Chata','É hoje','2018-07-23 11:27:14',NULL);
 
 /*Table structure for table `tab_Grupos_Sorteio` */
 
@@ -39,6 +43,10 @@ CREATE TABLE `tab_Grupos_Sorteio` (
   PRIMARY KEY (`ID_Grupo`,`ID_Usuario`),
   CONSTRAINT `FK_tab_Grupos_Sorteio` FOREIGN KEY (`ID_Grupo`, `ID_Usuario`) REFERENCES `tab_Grupos_Usuarios` (`ID_Grupo`, `ID_Usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `tab_Grupos_Sorteio` */
+
+insert  into `tab_Grupos_Sorteio`(`ID_Grupo`,`ID_Usuario`,`ID_AmigoSecreto`) values ('10','4','6'),('10','6','8'),('10','7','9'),('10','8','4'),('10','9','7'),('24','4','10'),('24','10','4');
 
 /*Table structure for table `tab_Grupos_Usuarios` */
 
@@ -54,6 +62,10 @@ CREATE TABLE `tab_Grupos_Usuarios` (
   CONSTRAINT `FK_tab_Grupos_Usuarios1` FOREIGN KEY (`ID_Grupo`) REFERENCES `tab_Grupos` (`ID_Grupo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
+/*Data for the table `tab_Grupos_Usuarios` */
+
+insert  into `tab_Grupos_Usuarios`(`ID_Usuario`,`ID_Grupo`,`fl_Proprietario`) values ('4','2','0'),('4','9','1'),('4','10','1'),('4','22','1'),('4','24','0'),('6','10','0'),('7','10','0'),('8','10','0'),('8','23','1'),('9','10','0'),('10','24','1'),('10','25','1');
+
 /*Table structure for table `tab_Grupos_Usuarios_Dicas` */
 
 DROP TABLE IF EXISTS `tab_Grupos_Usuarios_Dicas`;
@@ -67,6 +79,10 @@ CREATE TABLE `tab_Grupos_Usuarios_Dicas` (
   CONSTRAINT `FK_tab_Grupos_Usuarios_Dicas` FOREIGN KEY (`ID_Usuario`, `ID_Grupo`) REFERENCES `tab_Grupos_Usuarios` (`ID_Usuario`, `ID_Grupo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
+/*Data for the table `tab_Grupos_Usuarios_Dicas` */
+
+insert  into `tab_Grupos_Usuarios_Dicas`(`ID_Usuario`,`ID_Grupo`,`tx_Dica`,`nm_Link`) values ('4','10','teste de cadastro de dica','qq link ai'),('4','22','teste de cadastro de dica','ojdjdfxufbun vcmkdksfrjgtnv'),('10','24','Ferrari vermelha!','https://carro.mercadolivre.com.br/MLB-1071199117-ferrari-458-italia-45-v8-f1-dtc');
+
 /*Table structure for table `tab_Usuarios` */
 
 DROP TABLE IF EXISTS `tab_Usuarios`;
@@ -79,7 +95,11 @@ CREATE TABLE `tab_Usuarios` (
   `nm_Email` varchar(200) NOT NULL,
   `nm_Imagem` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`ID_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `tab_Usuarios` */
+
+insert  into `tab_Usuarios`(`ID_Usuario`,`CD_Usuario`,`CD_Token`,`nm_Usuario`,`nm_Email`,`nm_Imagem`) values ('4','2008772015809144','EAAcTqJOJ24EBAGBT9KeOuuHWujqaRsG5yCrMZBR47GcBiYM4iLGN9tXvdXeIajqRY1ERAAbsRTSMqoZBZAjHf4edZBORFTsH7vt','Lara Junqueira Alvarenga','la_alvarenga@hotmail.com','https://graph.facebook.com/2008772015809144/picture?type=large'),('6','1806640559423573','EAAcTqJOJ24EBAOQrM0jKQFBFGQ6oUYKKiTuhzSVMQATvGv41cwlsYZAlTWAKZBIILSWEDNLaNvindcvuIUrRDOiC8r8k9DechWZ','Simone Maria Junqueira Alvarenga','simonemariajunqueira@hotmail.com','https://graph.facebook.com/1806640559423573/picture?type=large'),('7','2284064304943667','EAAcTqJOJ24EBAMwioccVUFvRJtpGK3gHLOivrf31jgoqgur8M0qTm4BcC6DyqyZAjnE0ZAzcQVK2Okn3Mtf2sCSNCspgzCtRYOG','João Pedro Nogueira Alvarenga','jopalvarenga@hotmail.com','https://graph.facebook.com/2284064304943667/picture?type=large'),('8','2090506021047146','EAAcTqJOJ24EBAL3ZBqmzjZBhywAbWgamfMFYL0ZAiq2ykbaqeUA7HACYqk33UFZCPgjUII8nqsQLyll6QKFhx00Q85VGYdmyAyL','Nilo Dal\'Ava','niloandradina@hotmail.com','https://graph.facebook.com/2090506021047146/picture?type=large'),('9','2063031763768045','EAAcTqJOJ24EBAO5DZBsVZAH3f3Sg8S06W8ibn1F1Pgm7TnEmuYtAAV4HQedYZBP2nKAZCVfQ2Dx28dSaTPktzmlsoBO7Cqkewd7','Dalila Junqueira Alvarenga','dady.alvarenga@hotmail.com','https://graph.facebook.com/2063031763768045/picture?type=large'),('10','1827662823967454','EAAcTqJOJ24EBAC4y3VntDY54kr6oG9TBXa76ITid14aPFp6ZBaljRUZCfgkvX9kZC8blNuHRo5KyjpMghVfHevxXdRKdwGrX9xO','Flávio Rondinelli Carnevalli Neto','flavio_seo@yahoo.com.br','https://graph.facebook.com/1827662823967454/picture?type=large');
 
 /*Table structure for table `tab_Usuarios_Mensagens` */
 
@@ -100,7 +120,11 @@ CREATE TABLE `tab_Usuarios_Mensagens` (
   KEY `FK_tab_Usuarios_Mensagens_Dest` (`ID_UsuarioDestino`),
   CONSTRAINT `FK_tab_Usuarios_Mensagens_Dest` FOREIGN KEY (`ID_UsuarioDestino`) REFERENCES `tab_Usuarios` (`ID_Usuario`),
   CONSTRAINT `FK_tab_Usuarios_Mensagens_Usr` FOREIGN KEY (`ID_Usuario`) REFERENCES `tab_Usuarios` (`ID_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `tab_Usuarios_Mensagens` */
+
+insert  into `tab_Usuarios_Mensagens`(`ID_Mensagem`,`ID_MensagemPai`,`ID_Usuario`,`ID_UsuarioDestino`,`dt_Mensagem`,`tx_Mensagem`,`fl_Anonimo`,`fl_Lido`) values ('2','2','4','6','2018-07-22 22:29:40','teste de envio de mensagem','0','1'),('3','2','4','6','2018-07-22 22:36:18','hdbfvysgvuizhscjnvhbnz sbojnk','0','1'),('4','2','4','6','2018-07-22 22:37:11','xv bçokmzkcnvmnnfvhoivnx, kjishbsbçzdlfmb','0','1'),('5','2','4','6','2018-07-22 22:38:13','xv bçokmzkcnvmnnfvhoivnx, kjishbsbçzdlfmb','0','1'),('7','7','4','7','2018-07-23 00:21:43','teste','0','0'),('8','2','4','6','2018-07-23 00:31:43','teste de envio de mensagem','0','1'),('9','2','4','6','2018-07-23 00:34:10','xvdxfbdb','0','1'),('10','2','6','4','2018-07-23 00:57:05','teste de envio de resposta','0','1'),('11','2','6','4','2018-07-23 00:57:43','mais uma resposta','0','1'),('12','2','6','4','2018-07-23 00:57:52','again','0','1'),('13','13','4','6','2018-07-23 01:37:15','teste de envio','1','1'),('16','16','4','10','2018-07-23 12:32:19','teste','1','1'),('17','16','10','4','2018-07-23 12:33:17','testado','1','1'),('19','16','10','4','2018-07-23 12:42:18','mensagem anonima','1','1'),('20','20','10','4','2018-07-23 12:58:24','foi anonuima','1','1'),('21','21','10','4','2018-07-23 12:59:06','foi publica','0','1'),('22','21','4','10','2018-07-23 13:17:45','inseriu','0','0');
 
 /* Procedure structure for procedure `ST_GRUPOS_DELETE` */
 
@@ -272,7 +296,8 @@ BEGIN
 		
 		update tab_Grupos set dt_Sorteio = CURRENT_TIMESTAMP where ID_Grupo = _id_grupo;
 		
-		select tab_Usuarios.*, tab_Amigos.nm_Usuario as nm_Amigo, tab_Amigos.nm_Imagem as nm_ImagemAmigo, CURRENT_TIMESTAMP as dt_Sorteio
+		select tab_Usuarios.*, tab_Amigos.nm_Usuario as nm_Amigo, tab_Amigos.nm_Imagem as nm_ImagemAmigo, 
+			CURRENT_TIMESTAMP as dt_Sorteio, (select nm_Grupo from tab_Grupos where ID_Grupo = _id_grupo) as nm_Grupo
 		from tab_Grupos_Sorteio
 			inner join tab_Usuarios on tab_Grupos_Sorteio.ID_Usuario = tab_Usuarios.ID_Usuario
 			INNER JOIN tab_Usuarios as tab_Amigos ON tab_Grupos_Sorteio.ID_AmigoSecreto = tab_Amigos.ID_Usuario
@@ -557,7 +582,7 @@ DELIMITER $$
 /*!50003 CREATE DEFINER=`brasilco_app4`@`localhost` PROCEDURE `ST_USUARIOS_MENSAGENS_INSERT`(in _cd_usuario_logado VARCHAR(80),
 										    in _cd_usuario_destino VARCHAR(80),
 										    in _tx_mensagem text,
-										    in _fl_anonimo BOOLEAN)
+										    in _fl_anonimo integer)
 BEGIN
 	
 	DECLARE _id_mensagem, _id_usuario, _id_usuario_destino INTEGER;
@@ -565,11 +590,15 @@ BEGIN
 	SET _id_usuario = (SELECT ID_Usuario FROM tab_Usuarios WHERE CD_Usuario = _cd_usuario_logado);
 	SET _id_usuario_destino = (SELECT ID_Usuario FROM tab_Usuarios WHERE CD_Usuario = _cd_usuario_destino);
 	
-	SET _id_mensagem = ifnull((SELECT ID_Mensagem FROM tab_Usuarios_Mensagens
-			    WHERE ID_Mensagem = ID_MensagemPai AND fl_Anonimo = _fl_anonimo and (
-				(ID_Usuario = _id_usuario AND ID_UsuarioDestino = _id_usuario_destino) OR 
-				(ID_Usuario = _id_usuario_destino AND ID_UsuarioDestino = _id_usuario)
-			    )),0);
+	SET _id_mensagem = (SELECT ID_Mensagem FROM tab_Usuarios_Mensagens
+			    WHERE ID_Mensagem = ID_MensagemPai AND ((_fl_anonimo = 2 AND fl_Anonimo = 1 AND ID_Usuario = _id_usuario AND ID_UsuarioDestino = _id_usuario_destino) OR 
+								    (_fl_anonimo = 1 AND fl_Anonimo = 1 AND ID_UsuarioDestino = _id_usuario AND ID_UsuarioDestino = _id_usuario) OR
+								    (_fl_anonimo = 0 AND fl_Anonimo = 0 AND (
+									(ID_Usuario = _id_usuario AND ID_UsuarioDestino = _id_usuario_destino) OR 
+									(ID_Usuario = _id_usuario_destino AND ID_UsuarioDestino = _id_usuario))
+			    )) LIMIT 1);
+	
+	if _fl_anonimo = 2 then set _fl_anonimo = 1; end if;
 			    
 	INSERT INTO tab_Usuarios_Mensagens
 		(ID_MensagemPai, ID_Usuario, ID_UsuarioDestino, dt_Mensagem, tx_Mensagem, fl_Anonimo)
@@ -614,7 +643,8 @@ BEGIN
 			(case fl_Anonimo when 1 then 'Anônimo' else tab_Usuarios.nm_Usuario end) end as nm_Usuario,
 		CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN tab_Usuarios_Destino.nm_Imagem ELSE 
 			(CASE fl_Anonimo WHEN 1 THEN '' ELSE tab_Usuarios.nm_Imagem END) END AS nm_Imagem,
-		CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN tab_Usuarios_Destino.CD_Usuario ELSE tab_Usuarios.CD_Usuario END AS CD_Usuario
+		CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN tab_Usuarios_Destino.CD_Usuario ELSE tab_Usuarios.CD_Usuario END AS CD_Usuario,
+		CASE fl_Anonimo WHEN 1 THEN (CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN 2 ELSE fl_Anonimo end) ELSE fl_Anonimo END AS fl_Anonimo
 	from tab_Usuarios_Mensagens inner join tab_Usuarios on tab_Usuarios_Mensagens.ID_Usuario = tab_Usuarios.ID_Usuario
 		inner join tab_Usuarios tab_Usuarios_Destino ON tab_Usuarios_Mensagens.ID_UsuarioDestino = tab_Usuarios_Destino.ID_Usuario
 	WHERE ID_Mensagem = ID_MensagemPai AND (tab_Usuarios_Mensagens.ID_Usuario = _id_usuario OR tab_Usuarios_Mensagens.ID_UsuarioDestino = _id_usuario) 
@@ -632,7 +662,7 @@ DELIMITER $$
 
 /*!50003 CREATE DEFINER=`brasilco_app4`@`localhost` PROCEDURE `ST_USUARIOS_MENSAGENS_SELECT`(in _cd_usuario_logado VARCHAR(80),
 										    in _cd_usuario_destino VARCHAR(80),
-										    in _fl_anonimo boolean)
+										    in _fl_anonimo integer)
 BEGIN
 	declare _id_mensagem, _id_usuario, _id_usuario_destino integer;
 	
@@ -640,17 +670,20 @@ BEGIN
 	SET _id_usuario_destino = (SELECT ID_Usuario FROM tab_Usuarios WHERE CD_Usuario = _cd_usuario_destino);
 	
 	set _id_mensagem = (select ID_Mensagem from tab_Usuarios_Mensagens
-			    WHERE ID_Mensagem = ID_MensagemPai AND fl_Anonimo = _fl_anonimo AND (
-				(ID_Usuario = _id_usuario and ID_UsuarioDestino = _id_usuario_destino) or (ID_Usuario = _id_usuario_destino AND ID_UsuarioDestino = _id_usuario)
-			    ));
+			    WHERE ID_Mensagem = ID_MensagemPai AND ((_fl_anonimo = 2 and fl_Anonimo = 1 and ID_Usuario = _id_usuario AND ID_UsuarioDestino = _id_usuario_destino) or 
+								    (_fl_anonimo = 1 AND fl_Anonimo = 1 AND ID_UsuarioDestino = _id_usuario AND ID_UsuarioDestino = _id_usuario) or
+								    (_fl_anonimo = 0 and fl_Anonimo = 0 and (
+									(ID_Usuario = _id_usuario and ID_UsuarioDestino = _id_usuario_destino) or 
+									(ID_Usuario = _id_usuario_destino AND ID_UsuarioDestino = _id_usuario))
+			    )) limit 1);
 	
 	update tab_Usuarios_Mensagens set
 		fl_Lido = true
 	where fl_Lido = 0 and ID_UsuarioDestino = _id_usuario and ID_MensagemPai = _id_mensagem;
 	
 	SELECT tab_Usuarios_Mensagens.*, tab_Usuarios.CD_Usuario,
-		CASE fl_Anonimo WHEN 1 THEN 'Anônimo' ELSE tab_Usuarios.nm_Usuario END as nm_Usuario,
-		CASE fl_Anonimo WHEN 1 THEN '' ELSE tab_Usuarios.nm_Imagem END AS nm_Imagem
+		CASE _fl_anonimo WHEN 1 THEN 'Anônimo' ELSE tab_Usuarios.nm_Usuario END as nm_Usuario,
+		CASE _fl_anonimo WHEN 1 THEN '' ELSE tab_Usuarios.nm_Imagem END AS nm_Imagem
 	FROM tab_Usuarios_Mensagens INNER JOIN tab_Usuarios ON tab_Usuarios_Mensagens.ID_Usuario = tab_Usuarios.ID_Usuario
 	where ID_MensagemPai = _id_mensagem order by dt_Mensagem;
 	
@@ -669,7 +702,7 @@ BEGIN
 	SELECT *,
 		(select count(0) from tab_Grupos_Usuarios where ID_Usuario = tab_Usuarios.ID_Usuario) as nr_Grupos,
 		(SELECT COUNT(0) FROM tab_Grupos_Usuarios WHERE ID_Usuario = tab_Usuarios.ID_Usuario and fl_Proprietario = 1) AS nr_GruposProprietario,
-		(SELECT COUNT(DISTINCT ID_MensagemPai) FROM tab_Usuarios_Mensagens WHERE ID_UsuarioDestino = tab_Usuarios_Mensagens.ID_Mensagem and fl_Lido = 0) AS nr_Mensagens
+		(SELECT COUNT(DISTINCT ID_MensagemPai) FROM tab_Usuarios_Mensagens WHERE ID_UsuarioDestino = tab_Usuarios.ID_Usuario and fl_Lido = 0) AS nr_Mensagens
 	FROM tab_Usuarios WHERE CD_Usuario = _cd_usuario;
 	
 END */$$

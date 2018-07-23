@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { UsuarioService } from '../usuario.service';
 import { Usuario } from '../usuario';
@@ -20,7 +21,9 @@ export class UsuarioComponente implements OnInit {
     };
 
     constructor( 
-      private usuarioService : UsuarioService
+        private usuarioService : UsuarioService,
+        private activatedRoute: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit() {  
