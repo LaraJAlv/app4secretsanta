@@ -30,7 +30,7 @@ CREATE TABLE `tab_Grupos` (
 
 /*Data for the table `tab_Grupos` */
 
-insert  into `tab_Grupos`(`ID_Grupo`,`nm_Grupo`,`tx_Grupo`,`dt_Cadastro`,`dt_Sorteio`) values ('2','grupo 2',NULL,'2018-07-17 17:12:56',NULL),('3','grupo 3',NULL,'2018-07-17 17:12:59',NULL),('9','Amigo oculto da empresa','Este amigo oculto será sorteado no dia 30/07/2018 e a revelação será no dia 10/08/2018 na reunião de comemoração da entrada dos novos integrante da equipe (me inclusive rsrs)','2018-07-20 16:22:52',NULL),('10','Festa em comemoração da minha contratação','Esta festa vai bombar para caramba! Vai entrando no grupo ai mas os presentes quero todos pra mim!!','2018-07-20 17:21:50','2018-07-23 12:10:33'),('22','Grupo teste mussum','Mussum Ipsum, cacilds vidis litro abertis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. In elementis mé pra quem é amistosis quis leo. Sapien in monti palavris qui num significa nadis i pareci latim. ','2018-07-21 00:08:39',NULL),('23','Nois','Nois','2018-07-22 10:54:43',NULL),('24','Amigo invisível','Amigo invisível da turma de 2008','2018-07-23 11:00:45','2018-07-23 11:26:20'),('25','Lara Chata','É hoje','2018-07-23 11:27:14',NULL);
+insert  into `tab_Grupos`(`ID_Grupo`,`nm_Grupo`,`tx_Grupo`,`dt_Cadastro`,`dt_Sorteio`) values ('2','grupo 2',NULL,'2018-07-17 17:12:56',NULL),('3','grupo 3',NULL,'2018-07-17 17:12:59',NULL),('9','Amigo oculto da empresa','Este amigo oculto será sorteado no dia 30/07/2018 e a revelação será no dia 10/08/2018 na reunião de comemoração da entrada dos novos integrante da equipe (me inclusive rsrs)','2018-07-20 16:22:52',NULL),('10','Festa em comemoração da minha contratação','Esta festa vai bombar para caramba! Vai entrando no grupo ai mas os presentes quero todos pra mim!!','2018-07-20 17:21:50','2018-07-23 14:01:54'),('22','Grupo teste mussum','Mussum Ipsum, cacilds vidis litro abertis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. In elementis mé pra quem é amistosis quis leo. Sapien in monti palavris qui num significa nadis i pareci latim. ','2018-07-21 00:08:39',NULL),('23','Nois','Nois','2018-07-22 10:54:43',NULL),('24','Amigo invisível','Amigo invisível da turma de 2008','2018-07-23 11:00:45','2018-07-23 11:26:20'),('25','Lara Chata','É hoje','2018-07-23 11:27:14',NULL);
 
 /*Table structure for table `tab_Grupos_Sorteio` */
 
@@ -46,7 +46,7 @@ CREATE TABLE `tab_Grupos_Sorteio` (
 
 /*Data for the table `tab_Grupos_Sorteio` */
 
-insert  into `tab_Grupos_Sorteio`(`ID_Grupo`,`ID_Usuario`,`ID_AmigoSecreto`) values ('10','4','6'),('10','6','8'),('10','7','9'),('10','8','4'),('10','9','7'),('24','4','10'),('24','10','4');
+insert  into `tab_Grupos_Sorteio`(`ID_Grupo`,`ID_Usuario`,`ID_AmigoSecreto`) values ('10','4','6'),('10','6','7'),('10','7','9'),('10','8','4'),('10','9','8'),('24','4','10'),('24','10','4');
 
 /*Table structure for table `tab_Grupos_Usuarios` */
 
@@ -137,9 +137,12 @@ DELIMITER $$
 BEGIN
 	IF (SELECT COUNT(0) 
 	    FROM tab_Grupos_Usuarios INNER JOIN tab_Usuarios ON tab_Grupos_Usuarios.ID_Usuario = tab_Usuarios.ID_Usuario
-	    WHERE CD_Usuario = _cd_usuario AND ID_Grupo = _id_grupo AND fl_Proprietario = 1) > 0 THEN		
-		
-		DELETE FROM tab_Grupos where ID_Grupo = _id_grupo and dt_Sorteio is null;
+	    WHERE CD_Usuario = _cd_usuario AND ID_Grupo = _id_grupo AND fl_Proprietario = 1) > 0 THEN
+	    
+		DELETE FROM tab_Grupos_Usuarios_Dicas WHERE ID_Grupo = _id_grupo;
+		DELETE FROM tab_Grupos_Usuarios WHERE ID_Grupo = _id_grupo;
+		DELETE FROM tab_Grupos_Sorteio WHERE ID_Grupo = _id_grupo;
+		DELETE FROM tab_Grupos where ID_Grupo = _id_grupo;
 		
 	else
 	

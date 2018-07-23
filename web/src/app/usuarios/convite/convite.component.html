@@ -8,7 +8,8 @@
     <div class="card" style="padding: 20px;">{{ grupo.tx_Grupo }}</div>
     <p class="light center">Não deixe seu amigo esperando! Clique no botão abaixo e participe!</p>
     <div class="row center">
-        <button (click)="socialSignIn('facebook')" class="btn-large waves-effect waves-light orange">Cadastre com Facebook</button>
+        <button *ngIf="!grupo.dt_Sorteio" (click)="socialSignIn('facebook')" class="btn-large waves-effect waves-light orange">Cadastre com Facebook</button>
+        <p *ngIf="!!grupo.dt_Sorteio" class="grey lighten-3">Que pena! Este convite não está mais válido.</p>
     </div>
 </div>
 <br><br>
