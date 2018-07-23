@@ -1,0 +1,21 @@
+ header { padding: 10px; }
+
+ .page-cabecalho {
+    background: url(./img/secret-agent-background-4.jpg) no-repeat center center; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100px;
+ }
+ 
+ .icon-block {
+   padding: 0 15px;
+ }
+ .icon-block .material-icons {
+     font-size: inherit;
+ }
+
+ .no-spaces { margin: 0px; padding: 0px; }
+
+ .material-icons { cursor: pointer; margin: 0px 2px; }

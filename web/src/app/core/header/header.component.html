@@ -1,0 +1,6 @@
+<div class="right white-text" *ngIf="(auth$ | async) as auth; else login">
+    <img src="{{ auth.nm_Imagem }}" alt="" class="circle left" style="width: 50px; margin: 5px;">
+    <a [routerLink]="['/acesso']" class="white-text">{{ auth.nm_Avatar }}</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a (click)="logout()" class="white-text" style="cursor: pointer;">Sair</a>
+</div>

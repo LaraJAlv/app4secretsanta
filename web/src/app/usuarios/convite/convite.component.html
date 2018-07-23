@@ -1,0 +1,18 @@
+<div class="section no-pad-bot page-cabecalho">
+    <h1 class="header center orange-text">Convite</h1><br><br>
+</div>
+
+<div class="container section">
+    <p class="light center">Seu amigo "{{ usuario.nm_Usuario }}" está te convidando para participar do amigo secreto "{{ grupo.nm_Grupo }}".</p>
+    <p class="light center">Veja mais informações a respeito abaixo.</p>
+    <div class="card" style="padding: 20px;">{{ grupo.tx_Grupo }}</div>
+    <p class="light center">Não deixe seu amigo esperando! Clique no botão abaixo e participe!</p>
+    <div class="row center">
+        <button (click)="socialSignIn('facebook')" class="btn-large waves-effect waves-light orange">Cadastre com Facebook</button>
+    </div>
+</div>
+<br><br>
+<div class="container">
+    <img src="{{ usuario.nm_Imagem }}" alt="" class="circle left" style="width: 50px; margin-right: 10px;">
+    <p>Ainda com dúvidas?<br>Entre em contato com seu amigo pelo email {{ usuario.nm_Email }}</p>
+</div>

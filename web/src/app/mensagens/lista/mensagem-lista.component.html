@@ -1,0 +1,33 @@
+<ss-menu></ss-menu>
+
+<div class="container">
+    <h3 class="center blue-grey-text">Mensagens</h3>
+    <div class="divider"></div>
+    <br>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input 
+                placeholder="Filtrar por Nome" 
+                id="nm_Usuario" type="text" autofocus
+                (keyup)="filter($event.target.value)">
+            <label for="nm_Usuario">Filtrar por Nome</label>
+        </div>
+    </div>
+
+    <div class="card" style="padding: 5px;">
+        <p class="center" *ngIf="!mensagens.length">Nenhuma conversa encontrada!</p>
+
+        <table class="highlight" *ngIf="!!mensagens.length">        
+            <tbody>
+                <tr *ngFor="let mensagem of mensagens">
+                    <td style="width: 50px;"><img src="{{ mensagem.nm_Imagem }}" class="circle responsive-img"></td>
+                    <td>{{ mensagem.nm_Usuario }}</td>
+                    <td class="center" style="width: 40px;">
+                      <i class="material-icons" title="Ver mensagens" (click)="open(mensagem)">message</i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

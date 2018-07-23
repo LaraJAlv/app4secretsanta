@@ -1,0 +1,33 @@
+<ss-menu></ss-menu>
+
+<div class="container">
+  <h3 class="center">Perfil</h3>
+  
+  <div class="card" style="padding: 20px;">
+    <div class="row">
+
+      <div class="col s12 m4 center">
+        <img src="{{ usuario.nm_Imagem }}" alt="" class="circle responsive-img">
+      </div>
+
+      <div class="col s12 m8 left">
+          <h5>{{ usuario.nm_Usuario }}</h5>
+          <div class="divider"></div>
+
+          <p>
+            <i class="material-icons left">group</i>
+            Você pertence a {{ usuario.nr_Grupos }} grupos de amigos
+          </p>
+          <p>
+            <i class="material-icons left">person</i>
+            Destes grupos, em {{ usuario.nr_GruposProprietario }} você é o criador
+          </p>
+          <p>
+            <i class="material-icons left">message</i>
+            Você possui {{ usuario.nr_Mensagens }} mensagens não lidas
+          </p>
+      </div>
+
+    </div>
+  </div>
+</div>

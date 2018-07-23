@@ -1,0 +1,48 @@
+<ss-menu></ss-menu>
+
+<div class="container">
+  <h3 class="center blue-grey-text">Novo Grupo</h3>
+  <div class="divider"></div>
+  <br>
+
+  <form [formGroup]="grupoForm" (submit)="save()">
+
+    <div class="row">
+      <div class="input-field col s12">            
+        <label for="nm_Grupo" class="active">Nome do Grupo</label>
+        <input #nmGrupoInput id="nm_Grupo" type="text"
+          formControlName="nm_Grupo" maxlength="100"
+          class="validate no-spaces" style="padding: 0px; margin: 0px;"
+          autofocus>
+        <sd-vmessage 
+            *ngIf="grupoForm.get('nm_Grupo').errors?.required"
+            text="Nome do grupo é obrigatório!">
+        </sd-vmessage>        
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="tx_Grupo" class="active">Descrição do Grupo</label>
+        <input #txGrupoInput id="tx_Grupo" type="text"
+          formControlName="tx_Grupo"
+          class="validate no-spaces" style="padding: 0px; margin: 0px;"
+          autofocus>
+        <sd-vmessage 
+            *ngIf="grupoForm.get('tx_Grupo').errors?.required"
+            text="Descrição do grupo é obrigatório!">
+        </sd-vmessage> 
+      </div>
+    </div>
+
+    <div class="row"><br>
+      <button type="submit" class="btn waves-effect waves-light orange right" 
+        [disabled]="grupoForm.invalid">
+        Salvar <i class="material-icons right">send</i>
+      </button>
+    </div>
+  </form>
+
+  <a [routerLink]="['/grupos']" class="btn-floating btn-large waves-effect waves-light orange">
+    <i class="material-icons">arrow_back</i></a>
+</div>

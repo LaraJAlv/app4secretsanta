@@ -1,0 +1,149 @@
+<ss-menu></ss-menu>
+
+<div class="container">
+  <h3 class="center blue-grey-text">Detalhes do Grupo</h3>
+  <br>
+  
+  <div class="card" style="padding: 5px;">
+    <p><b>Nome do grupo:</b> {{ grupo.nm_Grupo }}</p>
+    <p><b>Data de criação:</b> {{ grupo.dt_Cadastro | date:'dd/MM/y, HH:mm' }}</p>
+    <p><b>Data do sorteio:</b> {{ grupo.dt_Sorteio | date:'dd/MM/y, HH:mm' }}</p>
+    <p *ngIf="!grupo.dt_Sorteio"><b>Convide seus amigos:</b> 
+      <a href="http://secretsanta.app4.com.br/convite/{{ CD_Usuario }}/{{ grupo.ID_Grupo }}" target="_blank">
+        http://secretsanta.app4.com.br/convite/{{ CD_Usuario }}/{{ grupo.ID_Grupo }}
+      </a></p>
+
+    <div class="center">
+      <button type="button" class="btn waves-effect waves-light orange" 
+          *ngIf="!!grupo.fl_Proprietario && !grupo.dt_Sorteio" (click)="sort()">
+        Realizar sorteio <i class="material-icons right">loop</i>
+      </button>
+  
+      <button type="button" class="btn waves-effect waves-light orange" 
+          *ngIf="!!grupo.fl_Proprietario && !!grupo.dt_Sorteio" (click)="sort_delete()">
+        Excluir sorteio <i class="material-icons right">loop</i>
+      </button>
+
+      <button type="button" class="btn waves-effect waves-light orange" 
+          *ngIf="!grupo.fl_Proprietario && !grupo.dt_Sorteio" (click)="user_delete()">
+        Sair do grupo <i class="material-icons right">cancel</i>
+      </button>
+    </div>
+    <br><br>
+
+    <div class="divider"></div>
+    <p>{{ grupo.tx_Grupo }}</p>
+  </div>
+  
+  <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">card_giftcard</i>Deixe uma dica de presente</div>
+      <div class="collapsible-body">
+        <form [formGroup]="dicaForm" (submit)="save()">
+
+          <div class="row">
+            <div class="input-field col s12">
+              <label for="tx_Dica" class="active">Dica de presente</label>
+              <input #txDicaInput id="tx_Dica" type="text"
+                formControlName="tx_Dica"
+                class="validate no-spaces" style="padding: 0px; margin: 0px;"
+                autofocus>
+              <sd-vmessage 
+                  *ngIf="dicaForm.get('tx_Dica').errors?.required"
+                  text="Dica de presente é obrigatório!">
+              </sd-vmessage> 
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="input-field col s9">            
+              <label for="nm_Link" class="active">Link para compra</label>
+              <input #nmLinkInput id="nm_Link" type="text"
+                formControlName="nm_Link" maxlength="300"
+                class="validate no-spaces" style="padding: 0px; margin: 0px;"
+                autofocus>
+            </div>
+
+            <div class="col s3"><br>
+              <button type="submit" class="btn waves-effect waves-light orange right" 
+                [disabled]="dicaForm.invalid">
+                Salvar <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>
+      
+        </form>
+      </div>
+    </li>
+
+    <li *ngIf="!!grupo.dt_Sorteio">
+      <div class="collapsible-header"><i class="material-icons">loop</i>Seu amigo secreto</div>
+      <div class="collapsible-body">
+
+        <div class="row">
+
+          <div class="col s12 m4 center">
+            <img src="{{ participante.nm_Imagem }}" alt="" class="circle responsive-img">
+          </div>
+          
+          <div class="col s12 m8 left">
+            <h5>{{ participante.nm_Usuario }}</h5>
+            <div class="divider"></div>
+  
+            <p><b>Dica de presente</b></p>
+            <p>
+              {{ participante.tx_Dica }}
+              <span *ngIf="!participante.tx_Dica">Ainda não informado!</span>
+            </p>
+            <p *ngIf="!!participante.nm_Link"><a href="{{ participante.nm_Link }}" target="_blank">clique aqui para comprar</a></p>
+          </div>
+    
+        </div>
+        
+      </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">people</i>Integrantes do grupo</div>
+      <div class="collapsible-body">
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input 
+              placeholder="Filtrar por Nome do Participante" 
+              id="nm_Usuario" type="text" autofocus
+              (keyup)="filter($event.target.value)">
+            <label for="nm_Usuario">Filtrar por Nome do Participante</label>
+          </div>
+        </div>
+      
+        <table class="highlight" *ngIf="!!participantes.length">
+          <thead>
+              <tr class="blue-grey lighten-4 blue-grey-text">
+                  <th class="center" style="width: 50px;"> </th>
+                  <th class="center">Participantes</th>
+                  <th class="center" style="width: 110px;"> </th>
+              </tr>
+          </thead>
+      
+          <tbody>
+              <tr *ngFor="let participante of participantes">
+                  <td><img src="{{ participante.nm_Imagem }}" class="circle responsive-img"></td>
+                  <td>{{ participante.nm_Usuario }}</td>
+                  <td class="center">
+                    <i *ngIf="participante.CD_Usuario != CD_Usuario" class="material-icons" title="Ver mensagens" (click)="message(participante)">message</i>
+                    <i *ngIf="!!grupo.fl_Proprietario && participante.fl_Proprietario && participante.CD_Usuario != CD_Usuario" class="material-icons" title="Excluir propriedade" (click)="owner_delete(participante)">person</i>
+                    <i *ngIf="!!grupo.fl_Proprietario && !participante.fl_Proprietario" class="material-icons" title="Definir propriedade" (click)="owner_set(participante)">person_outline</i>
+                    <i *ngIf="!!grupo.fl_Proprietario && !grupo.dt_Sorteio && participante.CD_Usuario != CD_Usuario" class="material-icons" title="Remover integrante" (click)="delete(participante)">delete_forever</i>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </li>
+  </ul>
+        
+  <a [routerLink]="['/grupos']" class="btn-floating btn-large waves-effect waves-light orange">
+    <i class="material-icons">arrow_back</i></a>
+</div>

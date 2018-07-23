@@ -1,0 +1,52 @@
+<ss-menu></ss-menu>
+
+<div class="container">
+    <h3 class="center blue-grey-text">Grupos</h3>
+    <div class="divider"></div>
+    <br>
+
+    <div class="row">
+        <div class="input-field col s9">
+            <input 
+                placeholder="Filtrar por Nome do Grupo" 
+                id="nm_Grupo" type="text" autofocus
+                (keyup)="filter($event.target.value)">
+            <label for="nm_Grupo">Filtrar por Nome do Grupo</label>
+        </div>
+        <div class="col s3"><br>
+            <a [routerLink]="['/grupos/form']" class="btn waves-effect waves-light orange right">                        
+                Novo grupo <i class="material-icons right">add</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="card" style="padding: 5px;">
+        <p class="center" *ngIf="!grupos.length">Nenhum grupo encontrado!</p>
+
+        <table class="highlight" *ngIf="!!grupos.length">
+            <thead>
+                <tr class="blue-grey lighten-4 blue-grey-text">
+                    <th class="center">Nome</th>
+                    <th class="center">Data de Criação</th>
+                    <th class="center">Data do Sorteio</th>
+                    <th class="center" style="width: 140px;"> </th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tr *ngFor="let grupo of grupos">
+                    <td>{{ grupo.nm_Grupo }}</td>
+                    <td>{{ grupo.dt_Cadastro | date:'dd/MM/y, HH:mm' }}</td>
+                    <td>{{ grupo.dt_Sorteio | date:'dd/MM/y, HH:mm' }}</td>
+                    <td class="center">
+                        <i *ngIf="!!grupo.fl_Proprietario" class="material-icons" title="Editar dados" (click)="edit(grupo)">edit</i>
+                        <i class="material-icons" title="Visualizar dados" (click)="detail(grupo)">search</i>
+                        <i *ngIf="!grupo.fl_Proprietario" class="material-icons" title="Aguardando sorteio">alarm</i>
+                        <i *ngIf="!!grupo.fl_Proprietario" class="material-icons" title="Sortear amigos" (click)="sort(grupo)">loop</i>
+                        <i *ngIf="!!grupo.fl_Proprietario" class="material-icons" title="Excluir grupo" (click)="delete(grupo)">delete_forever</i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
