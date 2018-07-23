@@ -100,7 +100,7 @@ CREATE TABLE `tab_Usuarios_Mensagens` (
   KEY `FK_tab_Usuarios_Mensagens_Dest` (`ID_UsuarioDestino`),
   CONSTRAINT `FK_tab_Usuarios_Mensagens_Dest` FOREIGN KEY (`ID_UsuarioDestino`) REFERENCES `tab_Usuarios` (`ID_Usuario`),
   CONSTRAINT `FK_tab_Usuarios_Mensagens_Usr` FOREIGN KEY (`ID_Usuario`) REFERENCES `tab_Usuarios` (`ID_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /* Procedure structure for procedure `ST_GRUPOS_DELETE` */
 
@@ -609,18 +609,17 @@ BEGIN
 	set _id_usuario = (select ID_Usuario from tab_Usuarios where CD_Usuario = _cd_usuario);
 	
 	select tab_Usuarios_Mensagens.*, 
-		(SELECT COUNT(0) FROM tab_Usuarios_Mensagens tab_Lido WHERE tab_Lido.ID_MensagemPai = tab_Usuarios_Mensagens.ID_Mensagem AND ID_UsuarioDestino = _id_usuario) as nr_Lidos,
+		(SELECT COUNT(0) FROM tab_Usuarios_Mensagens tab_Lido WHERE tab_Lido.ID_MensagemPai = tab_Usuarios_Mensagens.ID_Mensagem AND ID_UsuarioDestino = _id_usuario and fl_Lido = 0) as nr_Lidos,
 		case tab_Usuarios_Mensagens.ID_Usuario when _id_usuario then tab_Usuarios_Destino.nm_Usuario else 
-			(case fl_Anonimo when 1 then '' else tab_Usuarios.nm_Usuario end) end as nm_Usuario,
+			(case fl_Anonimo when 1 then 'Anônimo' else tab_Usuarios.nm_Usuario end) end as nm_Usuario,
 		CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN tab_Usuarios_Destino.nm_Imagem ELSE 
 			(CASE fl_Anonimo WHEN 1 THEN '' ELSE tab_Usuarios.nm_Imagem END) END AS nm_Imagem,
-		CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN tab_Usuarios_Destino.CD_Usuario ELSE 
-			(CASE fl_Anonimo WHEN 1 THEN '' ELSE tab_Usuarios.CD_Usuario END) END AS CD_Usuario
+		CASE tab_Usuarios_Mensagens.ID_Usuario WHEN _id_usuario THEN tab_Usuarios_Destino.CD_Usuario ELSE tab_Usuarios.CD_Usuario END AS CD_Usuario
 	from tab_Usuarios_Mensagens inner join tab_Usuarios on tab_Usuarios_Mensagens.ID_Usuario = tab_Usuarios.ID_Usuario
 		inner join tab_Usuarios tab_Usuarios_Destino ON tab_Usuarios_Mensagens.ID_UsuarioDestino = tab_Usuarios_Destino.ID_Usuario
 	WHERE ID_Mensagem = ID_MensagemPai AND (tab_Usuarios_Mensagens.ID_Usuario = _id_usuario OR tab_Usuarios_Mensagens.ID_UsuarioDestino = _id_usuario) 
 	group by ID_MensagemPai
-	ORDER BY Max(dt_Mensagem) DESC;
+	ORDER BY nr_Lidos desc, Max(dt_Mensagem) DESC;
 	
 END */$$
 DELIMITER ;
@@ -645,7 +644,13 @@ BEGIN
 				(ID_Usuario = _id_usuario and ID_UsuarioDestino = _id_usuario_destino) or (ID_Usuario = _id_usuario_destino AND ID_UsuarioDestino = _id_usuario)
 			    ));
 	
-	SELECT tab_Usuarios_Mensagens.*, tab_Usuarios.CD_Usuario, tab_Usuarios.nm_Usuario, tab_Usuarios.nm_Imagem
+	update tab_Usuarios_Mensagens set
+		fl_Lido = true
+	where fl_Lido = 0 and ID_UsuarioDestino = _id_usuario and ID_MensagemPai = _id_mensagem;
+	
+	SELECT tab_Usuarios_Mensagens.*, tab_Usuarios.CD_Usuario,
+		CASE fl_Anonimo WHEN 1 THEN 'Anônimo' ELSE tab_Usuarios.nm_Usuario END as nm_Usuario,
+		CASE fl_Anonimo WHEN 1 THEN '' ELSE tab_Usuarios.nm_Imagem END AS nm_Imagem
 	FROM tab_Usuarios_Mensagens INNER JOIN tab_Usuarios ON tab_Usuarios_Mensagens.ID_Usuario = tab_Usuarios.ID_Usuario
 	where ID_MensagemPai = _id_mensagem order by dt_Mensagem;
 	

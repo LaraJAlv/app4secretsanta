@@ -5,17 +5,19 @@
     <div class="divider"></div>
     <br>
 
-    <div class="row">
+
+    <div class="row" *ngIf="usuario.nm_Usuario != ''">
         <div class="col s3 m2 center">
             <img src="{{ usuario.nm_Imagem }}" alt="" class="circle responsive-img">
         </div>
-    
+        
         <div class="col s9 m10 left">
             <h5>{{ usuario.nm_Usuario }}</h5>
+            <small *ngIf="!!fl_Anonimo">( esta conversa será anônima )</small><br>
             {{ usuario.nm_Email }}<br>
         </div>
     </div>
-
+    
     <form [formGroup]="mensagemForm" (submit)="save()">
         <div class="row">
           <div class="input-field col s9">            
@@ -39,16 +41,27 @@
         </div>
     </form>
 
-    <div class="card" style="padding: 5px; max-height: 500px; overflow-y: hidden; overflow-x: auto;">
+    <div class="card" style="padding: 5px; height: 500px; overflow-y: auto; overflow-x: hidden;">
         <p class="center" *ngIf="!mensagens.length">Nenhuma conversa encontrada!</p>
 
-        <div *ngFor="let mensagem of mensagens.reverse()" class="row">
-            <div class="col s2 m1"><img *ngIf="usuario.CD_Usuario == mensagem.CD_Usuario" src="{{ mensagem.nm_Imagem }}" class="circle responsive-img"></div>
-            <div class="col s10">
-                {{ mensagem.tx_Mensagem }}<br>
-                <small><i>{{ mensagem.dt_Mensagem | date:'dd/MM/y, HH:mm' }}</i></small>
+        <div *ngFor="let mensagem of mensagens.reverse()">
+
+            <div *ngIf="usuario.CD_Usuario == mensagem.CD_Usuario" class="row card-panel teal lighten-4">
+                <div class="col s2 m1"><img src="{{ mensagem.nm_Imagem }}" class="circle responsive-img"></div>
+                <div class="col s10 m11 align-left">
+                    {{ mensagem.tx_Mensagem }}<br>
+                    <small><i>{{ mensagem.dt_Mensagem | date:'dd/MM/y, HH:mm' }}</i></small>
+                </div>
             </div>
-            <div class="col s2 m1"><img *ngIf="usuario.CD_Usuario != mensagem.CD_Usuario"  src="{{ mensagem.nm_Imagem }}" class="circle responsive-img"></div>
+
+            <div *ngIf="usuario.CD_Usuario != mensagem.CD_Usuario" class="row card-panel orange lighten-4">
+                <div class="col s10 m11 align-right">
+                    {{ mensagem.tx_Mensagem }}<br>
+                    <small><i>{{ mensagem.dt_Mensagem | date:'dd/MM/y, HH:mm' }}</i></small>
+                </div>
+                <div class="col s2 m1"><img src="{{ mensagem.nm_Imagem }}" class="circle responsive-img"></div>
+            </div>
+
         </div>
     </div>
 

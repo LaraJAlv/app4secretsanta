@@ -42,20 +42,29 @@ export class MensagemDadosComponent implements OnInit {
 
     this.mensagem.CD_UsuarioDestino = (!isDefined(this.activatedRoute.snapshot.params.user)) ? '' : this.activatedRoute.snapshot.params.user;
     this.mensagem.fl_Anonimo = ((!isDefined(this.activatedRoute.snapshot.params.anonimo)) ? 0 : this.activatedRoute.snapshot.params.anonimo) as boolean;
-
-    /* buscar informações do usuario que enviou o convite */
-    this.usuarioService
-      .profile(this.mensagem.CD_UsuarioDestino)
-      .subscribe (
-          res => this.usuario = res as Usuario,
-          err => console.log(err)
-      );
     
     /* listagem de mensagens da conversa */
     this.mensagemService
       .get(this.mensagem.CD_UsuarioDestino,this.mensagem.fl_Anonimo)
       .subscribe(
-          res => this.mensagens = res as Mensagem[],
+          res => {
+            this.mensagens = res as Mensagem[];
+            
+            /* buscar informações do usuario que enviou o convite */
+            this.usuarioService
+              .profile(this.mensagem.CD_UsuarioDestino)
+              .subscribe (
+                res => {
+                  var usuario_ret = res as Usuario;
+                  if (!!this.mensagens[this.mensagens.length - 1].fl_Anonimo && this.mensagens[this.mensagens.length - 1].ID_Usuario == usuario_ret.ID_Usuario) {
+                    this.usuario.CD_Usuario = usuario_ret.CD_Usuario
+                  } else {
+                    this.usuario = usuario_ret;
+                  }
+                },
+                err => console.log(err)
+            );
+          },
           err => console.log(err)
       );
   }

@@ -10,5 +10,5 @@ export interface Mensagem {
     dt_Mensagem?: Date;
     fl_Anonimo?: boolean;
     fl_Lido?: boolean;
-    nr_Lido?: number;
+    nr_Lidos?: number;
 }

@@ -22,7 +22,11 @@
             <tbody>
                 <tr *ngFor="let mensagem of mensagens">
                     <td style="width: 50px;"><img src="{{ mensagem.nm_Imagem }}" class="circle responsive-img"></td>
-                    <td>{{ mensagem.nm_Usuario }}</td>
+                    <td>
+                        {{ mensagem.nm_Usuario }}<br>
+                        <small *ngIf="!!mensagem.nr_Lidos"><b>({{ mensagem.nr_Lidos }} não lidas)</b></small>
+                        <small *ngIf="mensagem.fl_Anonimo"><b>conversa anônima</b></small>
+                    </td>
                     <td class="center" style="width: 40px;">
                       <i class="material-icons" title="Ver mensagens" (click)="open(mensagem)">message</i>
                     </td>
